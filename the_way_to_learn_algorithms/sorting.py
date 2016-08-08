@@ -62,18 +62,53 @@ def insert_sort2(lists):
 #❤split each element into partitions of size 1。
 # 将n个元素分成n个带归并的序列，最后归并成一个。
 #你发现了，没错，这两种方法实际就是同一个，只是方法一用递归实现
-def merge_sort(l):
-    
+#l[p:r]:待排序的数组
+def merge_sort(l,p,r):
+    '《算法导论》p17'
+    if p<r:
+        q=int((r+p)/2)
+        merge_sort(l,p,q)
+        merge_sort(l,q+1,r)
+        #此时，l[p:q]和l[q+1:r]都已经排好序,即简单情况
+        #但是为了能够在递归里使用这个函数，需要改的小细节很多，最主要的是
+        #l是整个数组，遍历和写回原数组的时候，下标不能从0开始，而是p→r
+        MERGE(l,p,q,r)
 
-
-
+#这是归并排序的简单情况，楼上的方法用递归把问题分解成简单情况
+#l:待排序数组，pqr是数组下标，p<q<r,假设l[p..q]和l[p+1..r]都已排好序
+def MERGE(l,p,q,r):
+    #两个数组的元素个数
+    n1 = q-p+1
+    n2 = r-q
+    #新建两个数组,将l中的元素拷贝到这两个数组中
+    A=list(l[p:q+1])
+    R=list(l[q+1:r+1])
+    #建立哨兵
+    A.append(float("inf"))
+    R.append(float("inf"))
+    i = j = 0
+    for k in range(p,r+1):
+        #谁小，谁放回原数组中，然后index+1
+        if A[i] < R[j]:
+            l[k] = A[i]
+            i += 1
+        else:
+            l[k] = R[j]
+            j += 1
+    return l
 
 
 if __name__ == '__main__':
     pass
     l = [13, 3, 2, 9, 1, 2, 0, 13, 6]
     '归并排序'
-
+    #简单情况
+    #l1 = [2,4,5,7,1,2,3,6]
+    #print(MERGE(l1,0,3,7))
+    #一般情况
+    merge_sort(l, 0, len(l) - 1)
+    print(l)
+    #
     '插入排序'
     # print(insert_sort(l))
     # print(insert_sort2(l))
