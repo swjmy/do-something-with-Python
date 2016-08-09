@@ -128,6 +128,8 @@ def PARTITION(l,p,r):
 
 #这是计算机408里的方法，但是《算法导论》里的方法不一样
 #这里取第一个元素l[p]为 pivot element
+#主要思想是，两个游标分别从两边向中间遍历，直至相等。
+#参考http://baike.baidu.com/link?url=i3z7nhejnFatdzoYfO_KFcIR4DEdDuOTXSP_YqNwsc218tZbCZJS1m69_F8tEpag0bW0n6a3IUh2wfnPSrsn9KPZEXF-kxYgFXcDqZa6trzOA3jTQIaG4870Oj1NTyIP8A5OrYChJiIIupIlwCyW-Z-5nAm5rflr7m_6t8hQunQqIhU2BWnVgNsRcYcT6m1p
 def quick_sort_408(l, p, q):
     low = p
     high = q
