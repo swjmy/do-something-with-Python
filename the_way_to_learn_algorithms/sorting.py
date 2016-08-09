@@ -98,16 +98,71 @@ def MERGE(l,p,q,r):
     return l
 
 
+#快速排序
+#这是《算法导论》里介绍的算法，取最后一个元素l[high]为 pivot element
+def quick_sort(l,low,high):
+    if low < high:
+        q = PARTITION(l,low,high)
+        quick_sort(l,low,q-1)
+        quick_sort(l,q+1,high)
+    return l
+
+def PARTITION(l,p,r):
+    key = l[r]
+    #两个游标i，j。i指向最后一个值小于key的位置；j为遍历游标
+    i = p-1
+    j = p
+    #开始找有多少个小于等于key的值，每找到一个i+1
+    #这里要注意的是，j的遍历不包括r，因为最后遍历结束时，要把r上的值交换到i+1上
+    while j < r:
+        #找到一个
+        if l[j] <= key:
+            i+=1
+            l[i],l[j] = l[j],l[i]
+        j+=1
+    #遍历结束
+    l[i+1],l[r] = l[r],l[i+1]
+    return i+1
+
+
+
+#这是计算机408里的方法，但是《算法导论》里的方法不一样
+#这里取第一个元素l[p]为 pivot element
+def quick_sort_408(l, p, q):
+    low = p
+    high = q
+    if low >= high:
+        return l
+    key = l[low]
+    while low < high:
+        while low < high and l[high] > key:
+            high -=1
+        l[low],l[high] = l[high],l[low]
+        while low < high and l[low] < key:
+            low +=1
+        l[low], l[high] = l[high], l[low]
+    quick_sort_408(l, p, low - 1)
+    quick_sort_408(l, high + 1, q)
+    return l
+
+
+
 if __name__ == '__main__':
     pass
     l = [13, 3, 2, 9, 1, 2, 0, 13, 6]
+    list = [5,3,2,9,1,6,7,8]
+    '快速排序'
+    #计算机408的算法
+    #print(quick_sort_408(list, 0, len(list) - 1))
+    #《算法导论》的算法
+    #print(quick_sort(list,0,len(list)-1))
     '归并排序'
     #简单情况
     #l1 = [2,4,5,7,1,2,3,6]
     #print(MERGE(l1,0,3,7))
     #一般情况
-    merge_sort(l, 0, len(l) - 1)
-    print(l)
+    #merge_sort(l, 0, len(l) - 1)
+    #print(l)
     #
     '插入排序'
     # print(insert_sort(l))
